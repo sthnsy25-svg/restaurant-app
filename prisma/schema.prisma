@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+  isActive  Boolean  @default(true)
+  coupons   CustomerCoupon[]
+}
+
+model Coupon {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  discount    String
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  isActive    Boolean  @default(true)
+  instances   CustomerCoupon[]
+}
+
+model CustomerCoupon {
+  id         String    @id @default(cuid())
+  code       String    @unique
+  customerId String
+  couponId   String
+  issuedAt   DateTime  @default(now())
+  usedAt     DateTime?
+  isUsed     Boolean   @default(false)
+  customer   Customer  @relation(fields: [customerId], references: [id])
+  coupon     Coupon    @relation(fields: [couponId], references: [id])
+}
+
+model Broadcast {
+  id             String   @id @default(cuid())
+  title          String
+  body           String
+  sentAt         DateTime @default(now())
+  recipientCount Int
+}
