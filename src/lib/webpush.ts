@@ -1,16 +1,19 @@
 import webpush from "web-push";
 
-webpush.setVapidDetails(
-  "mailto:admin@restaurant.local",
-  process.env.VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!
-);
+function getWebPush() {
+  webpush.setVapidDetails(
+    "mailto:admin@restaurant.local",
+    process.env.VAPID_PUBLIC_KEY!,
+    process.env.VAPID_PRIVATE_KEY!
+  );
+  return webpush;
+}
 
 export async function sendPushNotification(
   subscription: { endpoint: string; p256dh: string; auth: string },
   payload: { title: string; body: string; url?: string }
 ) {
-  return webpush.sendNotification(
+  return getWebPush().sendNotification(
     {
       endpoint: subscription.endpoint,
       keys: { p256dh: subscription.p256dh, auth: subscription.auth },
