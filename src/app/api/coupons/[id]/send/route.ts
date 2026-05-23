@@ -4,6 +4,8 @@ import { getAdminSession } from "@/lib/auth";
 import { sendPushNotification } from "@/lib/webpush";
 import { nanoid } from "nanoid";
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(
   _req: NextRequest,
   { params }: { params: { id: string } }
