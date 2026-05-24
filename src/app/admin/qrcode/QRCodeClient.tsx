@@ -6,8 +6,7 @@ export default function QRCodeClient() {
   const [url, setUrl] = useState("");
 
   useEffect(() => {
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
-    setUrl(appUrl);
+    setUrl(window.location.origin);
   }, []);
 
   function handlePrint() {
