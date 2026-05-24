@@ -6,6 +6,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -37,15 +38,24 @@ export default function LoginPage() {
       <div style={styles.card}>
         <h1 style={styles.title}>管理者ログイン</h1>
         <form onSubmit={handleSubmit} style={styles.form}>
-          <input
-            style={styles.input}
-            type="password"
-            placeholder="パスワード"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            autoFocus
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              style={{ ...styles.input, width: "100%", boxSizing: "border-box", paddingRight: 48 }}
+              type={show ? "text" : "password"}
+              placeholder="パスワード"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoFocus
+            />
+            <button
+              type="button"
+              onClick={() => setShow(!show)}
+              style={styles.eyeBtn}
+            >
+              {show ? "🙈" : "👁️"}
+            </button>
+          </div>
           {error && <p style={styles.error}>{error}</p>}
           <button style={styles.button} type="submit" disabled={loading}>
             {loading ? "ログイン中..." : "ログイン"}
@@ -105,5 +115,16 @@ const styles: Record<string, React.CSSProperties> = {
     color: "#e74c3c",
     fontSize: 14,
     textAlign: "center",
+  },
+  eyeBtn: {
+    position: "absolute",
+    right: 12,
+    top: "50%",
+    transform: "translateY(-50%)",
+    background: "none",
+    border: "none",
+    cursor: "pointer",
+    fontSize: 18,
+    padding: 0,
   },
 };
