@@ -2,7 +2,7 @@ import webpush from "web-push";
 
 function getWebPush() {
   webpush.setVapidDetails(
-    "mailto:admin@restaurant.local",
+    process.env.NEXT_PUBLIC_APP_URL || "https://restaurant-app-production-ec64.up.railway.app",
     process.env.VAPID_PUBLIC_KEY!,
     process.env.VAPID_PRIVATE_KEY!
   );
