@@ -70,16 +70,70 @@ export default function RegisterPage() {
   }
 
   if (status === "unsupported") {
+    const isIOS = /iphone|ipad|ipod/i.test(typeof navigator !== "undefined" ? navigator.userAgent : "");
     return (
       <div style={styles.page}>
         <div style={styles.card}>
-          <div style={{ fontSize: 48, textAlign: "center", marginBottom: 16 }}>⚠️</div>
-          <h1 style={styles.title}>非対応のブラウザです</h1>
-          <p style={styles.subtitle}>
-            iPhoneの場合はSafariで開き、<br />
-            「ホーム画面に追加」してから<br />
-            アプリを起動してください。
-          </p>
+          <div style={{ fontSize: 48, textAlign: "center", marginBottom: 16 }}>📱</div>
+          <h1 style={{ ...styles.title, fontSize: 22 }}>あと少しで登録できます！</h1>
+
+          {isIOS ? (
+            <>
+              <p style={{ ...styles.subtitle, marginBottom: 24 }}>
+                iPhoneは下の手順で登録してください。
+              </p>
+              <div style={stepStyles.list}>
+                <div style={stepStyles.item}>
+                  <span style={stepStyles.num}>1</span>
+                  <div>
+                    <strong>Safariで開く</strong>
+                    <br />
+                    <span style={stepStyles.note}>今のブラウザはNG。Safariアプリで開いてください。</span>
+                  </div>
+                </div>
+                <div style={stepStyles.item}>
+                  <span style={stepStyles.num}>2</span>
+                  <div>
+                    <strong>「ホーム画面に追加」する</strong>
+                    <br />
+                    <span style={stepStyles.note}>画面下の <strong>共有ボタン（四角に↑）</strong> をタップ → 「ホーム画面に追加」</span>
+                  </div>
+                </div>
+                <div style={stepStyles.item}>
+                  <span style={stepStyles.num}>3</span>
+                  <div>
+                    <strong>ホーム画面のアイコンから起動</strong>
+                    <br />
+                    <span style={stepStyles.note}>追加されたアイコンをタップして起動し、名前を入力して登録完了！</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <p style={{ ...styles.subtitle, marginBottom: 24 }}>
+                Androidの方は下の手順で登録してください。
+              </p>
+              <div style={stepStyles.list}>
+                <div style={stepStyles.item}>
+                  <span style={stepStyles.num}>1</span>
+                  <div>
+                    <strong>Chromeで開く</strong>
+                    <br />
+                    <span style={stepStyles.note}>ChromeブラウザでこのページのURLを開いてください。</span>
+                  </div>
+                </div>
+                <div style={stepStyles.item}>
+                  <span style={stepStyles.num}>2</span>
+                  <div>
+                    <strong>通知を許可する</strong>
+                    <br />
+                    <span style={stepStyles.note}>「通知を許可しますか？」が出たら「許可」をタップ</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     );
@@ -193,4 +247,30 @@ const styles: Record<string, React.CSSProperties> = {
   },
   note: { fontSize: 12, color: "#aaa", textAlign: "center", marginTop: -8 },
   error: { color: "#e74c3c", fontSize: 14, textAlign: "center" },
+};
+
+const stepStyles: Record<string, React.CSSProperties> = {
+  list: { display: "flex", flexDirection: "column", gap: 16 },
+  item: {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 14,
+    background: "#fff8f0",
+    borderRadius: 10,
+    padding: "14px 16px",
+  },
+  num: {
+    background: "#e67e22",
+    color: "#fff",
+    borderRadius: "50%",
+    width: 28,
+    height: 28,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 14,
+    fontWeight: "bold",
+    flexShrink: 0,
+  },
+  note: { fontSize: 13, color: "#666", lineHeight: 1.6, marginTop: 4 },
 };
