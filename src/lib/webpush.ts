@@ -30,6 +30,9 @@ export async function sendBroadcastPush(
     subscriptions.map((sub) => sendPushNotification(sub, payload))
   );
   const succeeded = results.filter((r) => r.status === "fulfilled").length;
-  const failed = results.filter((r) => r.status === "rejected").length;
-  return { succeeded, failed };
+  const failed = results.filter((r) => r.status === "rejected");
+  failed.forEach((r) => {
+    if (r.status === "rejected") console.error("Push failed:", r.reason?.statusCode, r.reason?.body || r.reason?.message);
+  });
+  return { succeeded, failed: failed.length };
 }
