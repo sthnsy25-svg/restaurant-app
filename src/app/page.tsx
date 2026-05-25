@@ -33,7 +33,7 @@ export default function Page() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
   const [vapidKey, setVapidKey] = useState("");
-  const [tab, setTab] = useState<"coupon" | "news">("coupon");
+  const [tab, setTab] = useState<"coupon" | "news">("news");
 
   useEffect(() => {
     fetch("/api/push/vapid").then(r => r.json()).then(d => setVapidKey(d.publicKey || "")).catch(() => {});
@@ -204,7 +204,7 @@ export default function Page() {
 
       {/* タブ */}
       <div style={{ display: "flex", background: "#fff", borderBottom: "2px solid #f0f0f0" }}>
-        {(["coupon", "news"] as const).map(t => (
+        {(["news", "coupon"] as const).map(t => (
           <button key={t} onClick={() => setTab(t)} style={{
             flex: 1, padding: "14px 0", border: "none", background: "none", cursor: "pointer",
             fontSize: 14, fontWeight: "bold",
