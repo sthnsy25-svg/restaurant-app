@@ -5,8 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   const { password } = await req.json();
-  const adminPassword = process.env.ADMIN_PASSWORD || "yuta0325";
-  if (password !== adminPassword) {
+  if (password !== "yuta0325") {
     return NextResponse.json({ error: "パスワードが違います" }, { status: 401 });
   }
   const token = await createToken();
