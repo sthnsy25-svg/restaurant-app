@@ -64,7 +64,7 @@ export default function BroadcastClient() {
   return (
     <>
       <h1 style={styles.heading}>一斉通知送信</h1>
-      <div style={styles.grid}>
+      <div style={styles.grid} className="broadcast-grid">
         <div style={styles.card}>
           <h2 style={styles.cardTitle}>新規配信</h2>
           {status === "success" && result && (

@@ -21,7 +21,7 @@ export default async function AdminDashboard() {
   return (
     <AdminShell>
       <h1 style={styles.heading}>ダッシュボード</h1>
-      <div style={styles.statsGrid}>
+      <div style={styles.statsGrid} className="stats-grid">
         <StatCard label="登録者数" value={customerCount} unit="人" color="#3498db" />
         <StatCard label="クーポン数" value={couponCount} unit="種" color="#e67e22" />
         <StatCard label="送信履歴" value={broadcastCount} unit="回" color="#2ecc71" />

@@ -124,7 +124,7 @@ export default function CouponsClient() {
         <div style={styles.card}>
           <h2 style={styles.cardTitle}>新規クーポン作成</h2>
           <form onSubmit={handleCreate} style={styles.form}>
-            <div style={styles.formGrid}>
+            <div style={styles.formGrid} className="form-grid">
               <div style={styles.field}>
                 <label style={styles.label}>クーポン名 *</label>
                 <input
@@ -179,7 +179,7 @@ export default function CouponsClient() {
             const totalCount = c._count.instances;
             const isExpired = new Date(c.expiresAt) < new Date();
             return (
-              <div key={c.id} style={{ ...styles.couponCard, opacity: isExpired ? 0.6 : 1 }}>
+              <div key={c.id} style={{ ...styles.couponCard, opacity: isExpired ? 0.6 : 1 }} className="coupon-card">
                 <div style={styles.couponInfo}>
                   <div style={styles.couponHeader}>
                     <span style={styles.couponTitle}>{c.title}</span>
@@ -192,7 +192,7 @@ export default function CouponsClient() {
                     　・　使用済み: {usedCount} / {totalCount} 枚
                   </p>
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }} className="coupon-card-actions">
                   <button
                     style={{
                       ...styles.sendBtn,

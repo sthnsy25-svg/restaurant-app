@@ -39,15 +39,15 @@ export default function CustomersClient({ initialCustomers }: { initialCustomers
         <p style={styles.empty}>登録者がいません</p>
       ) : (
         <div style={styles.table}>
-          <div style={styles.tableHeader}>
+          <div style={styles.tableHeader} className="customer-table-header">
             <span>名前</span>
             <span>登録日</span>
             <span></span>
           </div>
           {filtered.map((c) => (
-            <div key={c.id} style={styles.tableRow}>
+            <div key={c.id} style={styles.tableRow} className="customer-table-row">
               <span style={styles.name}>{c.name}</span>
-              <span style={styles.date}>
+              <span style={styles.date} className="customer-date">
                 {new Date(c.createdAt).toLocaleDateString("ja-JP")}
               </span>
               <button

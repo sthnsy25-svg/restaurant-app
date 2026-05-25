@@ -24,3 +24,40 @@ button {
 input, textarea, select {
   font-family: inherit;
 }
+
+/* 管理画面レスポンシブ */
+@media (max-width: 768px) {
+  /* ダッシュボード統計グリッド */
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+  }
+  /* 一斉送信グリッド */
+  .broadcast-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* クーポンカード */
+  .coupon-card {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .coupon-card-actions {
+    display: flex !important;
+    gap: 8px !important;
+    flex-direction: row !important;
+  }
+  .coupon-card-actions button {
+    flex: 1 !important;
+  }
+  /* クーポン作成フォームグリッド */
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* 登録者テーブル */
+  .customer-table-header { display: none !important; }
+  .customer-table-row {
+    grid-template-columns: 1fr auto !important;
+    gap: 4px !important;
+  }
+  .customer-date { display: none !important; }
+}
