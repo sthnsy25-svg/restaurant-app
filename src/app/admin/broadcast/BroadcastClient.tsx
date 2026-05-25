@@ -23,6 +23,16 @@ export default function BroadcastClient() {
       .catch(() => {});
   }, []);
 
+  async function handleDelete(id: string) {
+    if (!confirm("この送信履歴を削除しますか？")) return;
+    await fetch("/api/broadcast", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    setHistory(prev => prev.filter(h => h.id !== id));
+  }
+
   async function handleSend(e: React.FormEvent) {
     e.preventDefault();
     if (!confirm(`全登録者に通知を送信します。よろしいですか？`)) return;
@@ -104,7 +114,10 @@ export default function BroadcastClient() {
             <div style={styles.historyList}>
               {history.map((h) => (
                 <div key={h.id} style={styles.historyItem}>
-                  <p style={styles.historySubject}>{h.title}</p>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                    <p style={styles.historySubject}>{h.title}</p>
+                    <button onClick={() => handleDelete(h.id)} style={styles.deleteBtn}>削除</button>
+                  </div>
                   <p style={styles.historyMeta}>
                     {new Date(h.sentAt).toLocaleString("ja-JP")} ・ {h.recipientCount}人
                   </p>
@@ -132,6 +145,7 @@ const styles: Record<string, React.CSSProperties> = {
   successBanner: { background: "#d5f5e3", color: "#27ae60", padding: "12px 16px", borderRadius: 8, fontSize: 14, marginBottom: 16 },
   historyList: { display: "flex", flexDirection: "column", gap: 12 },
   historyItem: { padding: "12px 16px", background: "#f8f9fa", borderRadius: 8 },
+  deleteBtn: { background: "none", border: "1px solid #ddd", borderRadius: 6, padding: "3px 10px", fontSize: 12, color: "#e74c3c", cursor: "pointer", flexShrink: 0 },
   historySubject: { fontSize: 14, fontWeight: "bold", color: "#333" },
   historyMeta: { fontSize: 12, color: "#888", marginTop: 4 },
   empty: { color: "#aaa", fontSize: 14, textAlign: "center", padding: "24px 0" },
