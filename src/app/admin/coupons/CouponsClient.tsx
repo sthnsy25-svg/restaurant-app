@@ -53,6 +53,12 @@ export default function CouponsClient() {
     }
   }
 
+  async function handleDelete(coupon: Coupon) {
+    if (!confirm(`「${coupon.title}」を削除しますか？\n配布済みのクーポンも全て削除されます。`)) return;
+    await fetch(`/api/coupons/${coupon.id}`, { method: "DELETE" });
+    setCoupons(prev => prev.filter(c => c.id !== coupon.id));
+  }
+
   async function handleSend(coupon: Coupon) {
     if (!confirm(`「${coupon.title}」を全登録者にメール送信しますか？`)) return;
     setSending(coupon.id);
@@ -186,16 +192,21 @@ export default function CouponsClient() {
                     　・　使用済み: {usedCount} / {totalCount} 枚
                   </p>
                 </div>
-                <button
-                  style={{
-                    ...styles.sendBtn,
-                    opacity: sending === c.id || isExpired ? 0.5 : 1,
-                  }}
-                  onClick={() => handleSend(c)}
-                  disabled={sending === c.id || isExpired}
-                >
-                  {sending === c.id ? "送信中..." : "📧 配布する"}
-                </button>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <button
+                    style={{
+                      ...styles.sendBtn,
+                      opacity: sending === c.id || isExpired ? 0.5 : 1,
+                    }}
+                    onClick={() => handleSend(c)}
+                    disabled={sending === c.id || isExpired}
+                  >
+                    {sending === c.id ? "送信中..." : "📧 配布する"}
+                  </button>
+                  <button style={styles.deleteBtn} onClick={() => handleDelete(c)}>
+                    削除
+                  </button>
+                </div>
               </div>
             );
           })
@@ -233,5 +244,6 @@ const styles: Record<string, React.CSSProperties> = {
   desc: { fontSize: 13, color: "#555", marginBottom: 4 },
   meta: { fontSize: 12, color: "#888" },
   sendBtn: { background: "#e67e22", color: "#fff", border: "none", borderRadius: 8, padding: "10px 18px", fontSize: 13, fontWeight: "bold", cursor: "pointer", whiteSpace: "nowrap" },
+  deleteBtn: { background: "none", border: "1px solid #ddd", borderRadius: 8, padding: "6px 18px", fontSize: 12, color: "#e74c3c", cursor: "pointer", whiteSpace: "nowrap" },
   empty: { color: "#aaa", fontSize: 14, textAlign: "center", padding: "48px 0" },
 };
